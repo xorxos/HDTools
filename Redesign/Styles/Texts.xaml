@@ -1,0 +1,197 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Redesign.Styles"
+                    xmlns:l="clr-namespace:Redesign.ValueConverters"
+                    xmlns:redesign="clr-namespace:Redesign">
+
+
+    <ResourceDictionary.MergedDictionaries>
+        <!-- Order is important -->
+        <ResourceDictionary Source="Colors.xaml" />
+        <ResourceDictionary Source="Fonts.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    
+    
+    <!-- Search TextBox -->
+    <Style TargetType="{x:Type TextBox}" x:Key="SearchTextBox" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}" >
+                    <Grid Height="40">
+                        <Border x:Name="Bd" 
+                                Background="#26272c" 
+                                CornerRadius="3" 
+                                BorderThickness="0" 
+                                Margin="5, 1, 5, 5" >
+                            <TextBox CaretBrush="#8d8e94"
+                                     BorderThickness="0" 
+                                     Background="Transparent" 
+                                     Foreground="#FFC3C3C3"
+                                     Padding="8 9 30 8" 
+                                     IsHitTestVisible="True"
+                                     WindowChrome.IsHitTestVisibleInChrome="True" 
+                                     FontFamily="Arial" 
+                                     FontSize="13"
+                                     Text="{Binding Path=SearchBoxText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                     x:Name="SearchText">
+                            </TextBox>
+                        </Border>
+
+                        <TextBlock Margin="7, 1, 0, 0" 
+                                   Background="Transparent" 
+                                   Foreground="#8d8e94"
+                                   Padding="8 10 0 8" 
+                                   WindowChrome.IsHitTestVisibleInChrome="True"
+                                   IsHitTestVisible="False"
+                                   FontFamily="Arial" 
+                                   FontSize="13" 
+                                   Text="{TemplateBinding Tag}"
+                                   x:Name="PlaceHolder">
+                            <TextBlock.Resources>
+                                <l:IsNullOrEmptyConverter x:Key="isNullOrEmptyConverter" />
+                            </TextBlock.Resources>
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsKeyboardFocused, ElementName=SearchText}" Value="True">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Path=Text, ElementName=SearchText, Converter={StaticResource isNullOrEmptyConverter}}" Value="False">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        
+                        <Button SnapsToDevicePixels="True"
+                                WindowChrome.IsHitTestVisibleInChrome="True"
+                                IsHitTestVisible="True"
+                                Margin="0, 9, 10, 15"
+                                Width="18"
+                                Height="18"
+                                HorizontalAlignment="Right"
+                                Command="{Binding SearchXCommand}">
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Button}">
+                                                <Border Background="{TemplateBinding Background}">
+                                                    <ContentPresenter />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="Transparent" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                            
+                            <TextBlock FontFamily="{StaticResource RealMaterialIcons}" 
+                                       Background="Transparent"
+                                       Height="Auto"
+                                       Padding="0, 1, 0, 0">
+                                <TextBlock.Resources>
+                                    <l:IsNullOrEmptyConverter x:Key="isNullOrEmptyConverter" />
+                                </TextBlock.Resources>
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Text" Value="{StaticResource MaterialIconSearch}" />
+                                        <Setter Property="FontWeight" Value="Bold" />
+                                        <Setter Property="FontSize" Value="15" />
+                                        <Setter Property="IsHitTestVisible" Value="False" />
+                                        <Setter Property="Foreground" Value="#8d8e94" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Text, ElementName=SearchText, Converter={StaticResource isNullOrEmptyConverter}}" Value="False">
+                                                <Setter Property="Text" Value="{StaticResource MaterialIconCircleWithX}" />
+                                                <Setter Property="FontWeight" Value="Normal" />
+                                                <Setter Property="FontSize" Value="15" />
+                                                <Setter Property="IsHitTestVisible" Value="True" />
+                                            </DataTrigger>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Foreground" Value="#fff" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                        </Button>
+                        
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- RichTextBox Template -->
+    <Style x:Key="MyRichText" BasedOn="{x:Null}" TargetType="{x:Type TextBoxBase}">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="1"/>
+        <Setter Property="AllowDrop" Value="true"/>
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"  SnapsToDevicePixels="true" CornerRadius="0" BorderThickness="0">
+                        <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="{x:Type Hyperlink}" TargetType="{x:Type Hyperlink}">
+        <Setter Property="Foreground" Value="Blue"/>
+        <Setter Property="TextDecorations" Value="Underline"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Foreground" Value="Red"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="true">
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="RichTextBoxWithRoundedCorners" TargetType="{x:Type RichTextBox}">
+        <Style.Resources>
+            <Style x:Key="{x:Type FlowDocument}" TargetType="{x:Type FlowDocument}">
+                <Setter Property="OverridesDefaultStyle" Value="true"/>
+            </Style>
+            <Style x:Key="{x:Type Hyperlink}" BasedOn="{StaticResource {x:Type Hyperlink}}" TargetType="{x:Type Hyperlink}">
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="true">
+                        <Setter Property="Foreground" Value="Blue"/>
+                    </Trigger>
+                    <Trigger Property="IsEnabled" Value="false">
+                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </Style.Resources>
+        <Setter Property="MinWidth" Value="10"/>
+        <Style.BasedOn>
+            <StaticResource ResourceKey="{x:Type TextBoxBase}"/>
+        </Style.BasedOn>
+    </Style>
+
+</ResourceDictionary>

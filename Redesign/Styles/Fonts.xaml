@@ -1,0 +1,50 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Redesign"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <FontFamily x:Key="LatoRegular">pack://application;,,,/Fonts/#Lato Regular</FontFamily>
+    <FontFamily x:Key="LatoThin">pack://application;,,,/Fonts/#Lato Thin</FontFamily>
+    <FontFamily x:Key="LatoHeavy">pack://application;,,,/Fonts/#Lato Heavy</FontFamily>
+    <FontFamily x:Key="FontAwesome">pack://application;,,,/Fonts/#FontAwesome</FontFamily>
+    <FontFamily x:Key="MaterialIcons">pack://application;,,,/Fonts/#Material Design Icons</FontFamily>
+    <FontFamily x:Key="RealMaterialIcons">pack://application;,,,/Fonts/#Material Icons</FontFamily>
+
+    <Style TargetType="{x:Type Control}" x:Key="BaseStyle">
+        <Setter Property="FontFamily" Value="Arial" />
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}" x:Key="BaseTextBlockStyle">
+        <Setter Property="FontFamily" Value="Arial" />
+    </Style>
+
+    <Style TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}" />
+    <Style TargetType="{x:Type Label}" BasedOn="{StaticResource BaseStyle}" />
+    <Style TargetType="{x:Type TextBox}" BasedOn="{StaticResource BaseStyle}" />
+    <Style TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseTextBlockStyle}" />
+    <Style TargetType="{x:Type ListView}" BasedOn="{StaticResource BaseStyle}" />
+
+    <system:String x:Key="MaterialIconSearch">&#xE8B6;</system:String>
+    <system:String x:Key="MaterialIconCircleWithX">&#xE5C9;</system:String>
+    <system:String x:Key="MaterialIconSettings">&#xE8B8;</system:String>
+    <system:String x:Key="MaterialIconBold">&#xE238;</system:String>
+    <system:String x:Key="MaterialIconItalic">&#xE23F;</system:String>
+    <system:String x:Key="MaterialIconUnderline">&#xE249;</system:String>
+    <system:String x:Key="MaterialIconAlignLeft">&#xE236;</system:String>
+    <system:String x:Key="MaterialIconAlignCenter">&#xE234;</system:String>
+    <system:String x:Key="MaterialIconAlignRight">&#xE237;</system:String>
+    <system:String x:Key="MaterialIconAlignJustify">&#xE235;</system:String>
+    <system:String x:Key="MaterialIconUnorderedList">&#xE241;</system:String>
+    <system:String x:Key="MaterialIconOrderedList">&#xE242;</system:String>
+    <system:String x:Key="MaterialIconDedent">&#xE23D;</system:String>
+    <system:String x:Key="MaterialIconIndent">&#xE23E;</system:String>
+
+    <system:String x:Key="MaterialIconMinimize">&#xF5B0;</system:String>
+    <system:String x:Key="MaterialIconMaximize">&#xF5AF;</system:String>
+    <system:String x:Key="MaterialIconClose">&#xF5AD;</system:String>
+
+    <system:String x:Key="MaterialIconAdd">&#xE89C;</system:String>
+    <system:String x:Key="MaterialIconTrash">&#xE872;</system:String>
+    <system:String x:Key="MaterialIconEdit">&#xE3C9;</system:String>
+
+</ResourceDictionary>

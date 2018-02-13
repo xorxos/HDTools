@@ -1,0 +1,134 @@
+﻿<Window x:Class="Redesign.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Redesign"
+        xmlns:local1="clr-namespace:Redesign.Controls.PhraseContent"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        mc:Ignorable="d"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
+        MinWidth="{Binding WindowMinimumWidth}"
+        MinHeight="{Binding WindowMinimumHeight}"
+        Style="{StaticResource MyWindow}"
+        x:Name="AppWindow"
+        Title="MainWindow" Height="650" Width="1100" >
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome 
+            ResizeBorderThickness="{Binding ResizeBorderThickness}"
+            CaptionHeight="{Binding TitleHeight}"
+            CornerRadius="0"
+            GlassFrameThickness="0" />
+    </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <DropShadowEffect x:Key="z-depth1" 
+                          BlurRadius="2"  
+                          ShadowDepth="2.5" 
+                          Opacity=".5" 
+                          Direction="0" 
+                          Color="#1b7ece" />
+        <DropShadowEffect x:Key="z-depth2" 
+                          BlurRadius="2" 
+                          ShadowDepth="2.5" 
+                          Opacity=".5" 
+                          Direction="0"
+                          Color="#BBBBBB" />
+        <DropShadowEffect x:Key="z-depth3" 
+                          BlurRadius="8" 
+                          ShadowDepth="2" 
+                          Opacity=".7" 
+                          Direction="90" 
+                          Color="#BBBBBB" />
+    </Window.Resources>
+
+    <!-- The main window -->
+    <Grid Background="#fff" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="55" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+        <!-- Pick Program Column -->
+        <Border Panel.ZIndex="99" 
+                Grid.Column="0" 
+                Effect="{StaticResource z-depth2}" 
+                Background="#292e34" >
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="50" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="1">
+                    <Button Style="{StaticResource MenuIconButton}" 
+                            Content="{StaticResource MaterialIconAdd}"/>
+                </StackPanel>
+                
+                <Button Grid.Row="2"
+                        Style="{StaticResource MenuIconButton}" 
+                        Content="{StaticResource MaterialIconSettings}"
+                        FontSize="21"/>
+            </Grid>
+        </Border>
+
+
+        <!-- Program Content -->
+        <Grid Grid.Column="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Column List -->
+            <local:SideItems>
+                <local:PhraseListControl />
+            </local:SideItems>
+
+
+
+            <!-- Right Column Content & Title Bar -->
+            <Grid Grid.Column="1" 
+                  Grid.Row="0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Border Background="#FFF" />
+
+                <StackPanel Grid.Column="1"
+                            Panel.ZIndex="99"
+                            Orientation="Horizontal"
+                            Background="#fff">
+                    <Button Command="{Binding MinimizeCommand}" 
+                            Style="{StaticResource WindowControlButton}" 
+                            Content="{StaticResource MaterialIconMinimize}" />
+                    <Button Command="{Binding MaximizeCommand}" 
+                            Style="{StaticResource WindowControlButton}" 
+                            Content="{StaticResource MaterialIconMaximize}" />
+                    <Button Command="{Binding CloseCommand}"
+                            Margin="0, 0, 7, 0"
+                            Style="{StaticResource WindowControlButton}" 
+                            Content="{StaticResource MaterialIconClose}"
+                            FontWeight="Bold"/>
+
+
+                </StackPanel>
+            </Grid>
+
+            <local1:PhraseContentControl Grid.Row="1" 
+                                         Grid.Column="2"/>
+        </Grid>
+    </Grid>
+</Window>
