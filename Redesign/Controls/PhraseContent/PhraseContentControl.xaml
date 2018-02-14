@@ -100,35 +100,44 @@
                       Height="22" 
                       BorderBrush="#FFD1D1D1" FontSize="14"/>
             <ComboBox x:Name="_FontSize"
-                  Style="{StaticResource ComboBoxFlatStyle}"
-                  Focusable="False"
-                  Width="56" 
-                  Margin="5, 0, 0, 0" 
-                  SelectionChanged="FontSize_SelectionChanged"
-                  Height="22" 
-                  BorderBrush="#FFD1D1D1" FontSize="14"/>
+                      Style="{StaticResource ComboBoxFlatStyle}"
+                      Focusable="False"
+                      Width="56" 
+                      Margin="5, 0, 0, 0" 
+                      SelectionChanged="FontSize_SelectionChanged"
+                      Height="22" 
+                      BorderBrush="#FFD1D1D1" FontSize="14"/>
+            <Button Focusable="False"
+                    Margin="8 0 0 0"
+                    x:Name="_btnTextColor"
+                    FontSize="17"
+                    CommandTarget="{Binding ElementName=_richTextBox}"
+                    Style="{StaticResource FontIconButton}" 
+                    Content="{StaticResource MaterialIconTextColor}" ToolTip="Font Color"
+                          />
             <Border BorderThickness="1" 
                     BorderBrush="#8d8e94" 
-                    Margin="10 8 5 8" />
+                    Margin="5 8" />
+            
             <ToggleButton Focusable="False"
                           x:Name="_btnBold"
                           Command="EditingCommands.ToggleBold" 
                           CommandTarget="{Binding ElementName=_richTextBox}"
                           Style="{StaticResource FontIconToggleButton}" 
-                          Content="{StaticResource MaterialIconBold}"
+                          Content="{StaticResource MaterialIconBold}" ToolTip="Bold"
                           />
             <ToggleButton x:Name="_btnItalic"
                           Command="EditingCommands.ToggleItalic" 
                           Focusable="False"
                           CommandTarget="{Binding ElementName=_richTextBox}"
                           Style="{StaticResource FontIconToggleButton}" 
-                          Content="{StaticResource MaterialIconItalic}"/>
+                          Content="{StaticResource MaterialIconItalic}" ToolTip="Italic"/>
             <ToggleButton x:Name="_btnUnderline"
                           Command="EditingCommands.ToggleUnderline" 
                           Focusable="False"
                           CommandTarget="{Binding ElementName=_richTextBox}"
                           Style="{StaticResource FontIconToggleButton}" 
-                          Content="{StaticResource MaterialIconUnderline}"/>
+                          Content="{StaticResource MaterialIconUnderline}" ToolTip="Underline"/>
             <Border BorderThickness="1" 
                     BorderBrush="#8d8e94" 
                     Margin="5 8" />
@@ -138,28 +147,28 @@
                           Checked="_btnAlignLeft_Checked"
                           CommandTarget="{Binding ElementName=_richTextBox}"
                           Style="{StaticResource FontIconToggleButton}" 
-                          Content="{StaticResource MaterialIconAlignLeft}"/>
+                          Content="{StaticResource MaterialIconAlignLeft}" ToolTip="Align Left"/>
             <ToggleButton x:Name="_btnAlignCenter"
                           Command="EditingCommands.AlignCenter" 
                           Focusable="False"
                           Checked="_btnAlignCenter_Checked"
                           CommandTarget="{Binding ElementName=_richTextBox}"
                           Style="{StaticResource FontIconToggleButton}" 
-                          Content="{StaticResource MaterialIconAlignCenter}"/>
+                          Content="{StaticResource MaterialIconAlignCenter}" ToolTip="Center"/>
             <ToggleButton x:Name="_btnAlignRight"
                           Command="EditingCommands.AlignRight"
                           Focusable="False" 
                           Checked="_btnAlignRight_Checked"
                           CommandTarget="{Binding ElementName=_richTextBox}"
                           Style="{StaticResource FontIconToggleButton}" 
-                          Content="{StaticResource MaterialIconAlignRight}"/>
+                          Content="{StaticResource MaterialIconAlignRight}" ToolTip="Align Right"/>
             <ToggleButton x:Name="_btnAlignJustify"
                           Command="EditingCommands.AlignJustify"
                           Focusable="False" 
                           Checked="_btnAlignJustify_Checked"
                           CommandTarget="{Binding ElementName=_richTextBox}"
                           Style="{StaticResource FontIconToggleButton}" 
-                          Content="{StaticResource MaterialIconAlignJustify}"/>
+                          Content="{StaticResource MaterialIconAlignJustify}" ToolTip="Justify"/>
             <Border BorderThickness="1" 
                     BorderBrush="#8d8e94" 
                     Margin="5 8" />
@@ -169,27 +178,37 @@
                           Checked="_btnBullets_Checked"
                           CommandTarget="{Binding ElementName=_richTextBox}"
                           Style="{StaticResource FontIconToggleButton}" 
-                          Content="{StaticResource MaterialIconUnorderedList}"/>
+                          Content="{StaticResource MaterialIconUnorderedList}" ToolTip="Bullets"/>
             <ToggleButton x:Name="_btnNumbers"
                           Command="EditingCommands.ToggleNumbering"
                           Focusable="False" 
                           Checked="_btnNumbers_Checked"
                           CommandTarget="{Binding ElementName=_richTextBox}"
                           Style="{StaticResource FontIconToggleButton}" 
-                          Content="{StaticResource MaterialIconOrderedList}"/>
+                          Content="{StaticResource MaterialIconOrderedList}" ToolTip="Numbered List"/>
             <Border BorderThickness="1" 
                     BorderBrush="#8d8e94"
                     Margin="5 8" />
             <Button Command="EditingCommands.IncreaseIndentation"
-                          Focusable="False"
-                          CommandTarget="{Binding ElementName=_richTextBox}"
-                          Style="{StaticResource FontIconButton}" 
-                          Content="{StaticResource MaterialIconIndent}"/>
+                    Focusable="False"
+                    CommandTarget="{Binding ElementName=_richTextBox}"
+                    Style="{StaticResource FontIconButton}" 
+                    Content="{StaticResource MaterialIconIndent}" ToolTip="Indent"/>
             <Button Command="EditingCommands.DecreaseIndentation"
-                          Focusable="False" 
-                          CommandTarget="{Binding ElementName=_richTextBox}"
-                          Style="{StaticResource FontIconButton}" 
-                          Content="{StaticResource MaterialIconDedent}"/>
+                    Focusable="False" 
+                    CommandTarget="{Binding ElementName=_richTextBox}"
+                    Style="{StaticResource FontIconButton}" 
+                    Content="{StaticResource MaterialIconDedent}" ToolTip="Dedent"/>
+            <Border BorderThickness="1" 
+                    BorderBrush="#8d8e94" 
+                    Margin="5 8" />
+            <Button Focusable="False"
+                    x:Name="_btnInsert"
+                    CommandTarget="{Binding ElementName=_richTextBox}"
+                    Style="{StaticResource FontIconButton}" 
+                    Content="{StaticResource MaterialIconInsertPhoto}" ToolTip="Insert Image"
+                    />
+            
 
         </StackPanel>
 
@@ -208,7 +227,8 @@
                           SelectionChanged="_richTextBox_SelectionChanged"
                           Text="{Binding Path=SelectedItem.Content, 
                                          Mode=TwoWay, 
-                                         UpdateSourceTrigger=PropertyChanged}">
+                                         UpdateSourceTrigger=PropertyChanged}" 
+                          SpellCheck.IsEnabled="True">
             <RichTextBox.CommandBindings>
                 <CommandBinding Command="EditingCommands.ToggleBold"/>
                 <CommandBinding Command="EditingCommands.ToggleItalic"/>

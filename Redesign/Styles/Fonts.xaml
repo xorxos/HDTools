@@ -38,6 +38,8 @@
     <system:String x:Key="MaterialIconOrderedList">&#xE242;</system:String>
     <system:String x:Key="MaterialIconDedent">&#xE23D;</system:String>
     <system:String x:Key="MaterialIconIndent">&#xE23E;</system:String>
+    <system:String x:Key="MaterialIconTextColor">&#xE23C;</system:String>
+    <system:String x:Key="MaterialIconInsertPhoto">&#xE251;</system:String>
 
     <system:String x:Key="MaterialIconMinimize">&#xF5B0;</system:String>
     <system:String x:Key="MaterialIconMaximize">&#xF5AF;</system:String>
@@ -46,5 +48,6 @@
     <system:String x:Key="MaterialIconAdd">&#xE89C;</system:String>
     <system:String x:Key="MaterialIconTrash">&#xE872;</system:String>
     <system:String x:Key="MaterialIconEdit">&#xE3C9;</system:String>
+    <system:String x:Key="MaterialIconMoreVert">&#xE5D4;</system:String>
 
 </ResourceDictionary>
