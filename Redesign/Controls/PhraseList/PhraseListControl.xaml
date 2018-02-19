@@ -6,10 +6,12 @@
              xmlns:local="clr-namespace:Redesign"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid DataContext="{x:Static local:PhraseListDataModel.Instance}" Background="{StaticResource BackgroundCreamBrush}">
+    <Grid DataContext="{x:Static local:PhraseListDataModel.Instance}" 
+          Background="{StaticResource BackgroundCreamBrush}">
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Items}"
-                          Padding="0 0 0 17">
+            <ItemsControl ItemsSource="{Binding ViewedItems}"
+                          Padding="0 0 0 17"
+                          IsTabStop="False">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <local:PhraseListItemControl />

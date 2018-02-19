@@ -17,7 +17,7 @@
         MinHeight="{Binding WindowMinimumHeight}"
         Style="{StaticResource MyWindow}"
         x:Name="AppWindow"
-        Title="MainWindow" Height="650" Width="1100" >
+        Title="MainWindow" Height="600" Width="1070" >
 
     <WindowChrome.WindowChrome>
         <WindowChrome 
@@ -68,13 +68,27 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="1">
                     <Button Style="{StaticResource MenuIconButton}" 
-                            Content="{StaticResource MaterialIconAdd}" ToolTip="New Phrase"/>
+                            Height="50"
+                            FontSize="26"
+                            Content="{StaticResource MaterialIconAdd}" 
+                            ToolTip="New Phrase" Cursor="Hand"/>
+                    <Button Style="{StaticResource MenuIconButton}" 
+                            Height="50"
+                            FontSize="25"
+                            Content="{StaticResource MaterialIconTrash}" 
+                            ToolTip="Delete Selected Phrase" Cursor="Hand"/>
+                    <Button Style="{StaticResource MenuIconButton}" 
+                            Height="50"
+                            FontSize="26"
+                            Content="{StaticResource MaterialIconShare}" 
+                            ToolTip="Share" Cursor="Hand"/>
                 </StackPanel>
                 
                 <Button Grid.Row="2"
                         Style="{StaticResource MenuIconButton}" 
                         Content="{StaticResource MaterialIconSettings}"
-                        FontSize="21" ToolTip="Settings"/>
+                        FontSize="21" 
+                        ToolTip="Settings" Cursor="Hand"/>
             </Grid>
         </Border>
 

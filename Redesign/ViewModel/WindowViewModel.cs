@@ -45,7 +45,7 @@ namespace Redesign
         /// <summary>
         /// The smallest width the window can go to
         /// </summary>
-        public double WindowMinimumWidth { get; set; } = 1000;
+        public double WindowMinimumWidth { get; set; } = 1070;
 
         /// <summary>
         /// The smallest height the window can go to
@@ -130,7 +130,7 @@ namespace Redesign
         public string SearchBoxText
         {
             get { return _searchboxtext; }
-            set { _searchboxtext = value; OnPropertyChanged(nameof(SearchBoxText)); }
+            set { _searchboxtext = value; OnPropertyChanged(nameof(SearchBoxText)); PhraseListDataModel.Instance.GenerateViewedItems(SearchBoxText); }
         }
         #endregion
 
@@ -157,6 +157,24 @@ namespace Redesign
         /// </summary>
         public ICommand SearchXCommand { get; set; }
 
+        #endregion
+
+        /// <summary>
+        /// A single instance of the window view model
+        /// </summary>
+        #region Singleton
+        private static WindowViewModel _instance;
+        public static WindowViewModel Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new WindowViewModel(Application.Current.MainWindow);
+                }
+                return _instance;
+            }
+        }
         #endregion
 
         #region Constructor

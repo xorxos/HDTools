@@ -13,6 +13,7 @@
         #region Singleton
         public static PhraseListItemDataModel Instance => new PhraseListItemDataModel();
         #endregion
+        
 
         #region Contructor
 

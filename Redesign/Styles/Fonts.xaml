@@ -49,5 +49,6 @@
     <system:String x:Key="MaterialIconTrash">&#xE872;</system:String>
     <system:String x:Key="MaterialIconEdit">&#xE3C9;</system:String>
     <system:String x:Key="MaterialIconMoreVert">&#xE5D4;</system:String>
+    <system:String x:Key="MaterialIconShare">&#xE80D;</system:String>
 
 </ResourceDictionary>

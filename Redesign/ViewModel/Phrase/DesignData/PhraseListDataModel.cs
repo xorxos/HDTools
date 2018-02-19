@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using System.Windows;
 
 namespace Redesign
 {
@@ -18,6 +20,9 @@ namespace Redesign
             set { _selectedItem = value; OnPropertyChanged(nameof(_selectedItem)); }
         }
 
+        
+
+        
         /// <summary>
         /// A single instance of the data model
         /// </summary>
@@ -48,7 +53,6 @@ namespace Redesign
                 {
                     Abbreviation = "#IFSACC",
                     Description = "How to request access to IFS and the link to form",
-                    IsSelected = true
                 },
                 new PhraseListItemViewModel
                 {
@@ -112,14 +116,35 @@ namespace Redesign
                 }
             };
 
-            //Set the initial selected item object. Run SetItemTrue twice to keep the top item at the top.
-            var item = Items[0];
-            SetItemTrue(item.Abbreviation);
-            SetItemTrue(item.Abbreviation);
+            GenerateViewedItems(WindowViewModel.Instance.SearchBoxText);
         }
         #endregion
 
-        
+        public void GenerateViewedItems(string search)
+        {
+            List<PhraseListItemViewModel> ViewItems = new List<PhraseListItemViewModel>();
+            if (search == null || search == "" || search == string.Empty)
+            {
+                ViewedItems = Items.OrderBy(x =>x.Abbreviation).ToList();
+                OnPropertyChanged(nameof(ViewedItems));
+
+                //Set the initial selected item object. Run SetItemTrue twice to keep the top item at the top.
+                var selectitem = ViewedItems.First();
+                SetItemTrue(selectitem.Abbreviation);
+            }
+            else
+            {
+                foreach (var item in Items)
+                {
+                    if (item.Abbreviation.ToUpper().Contains(search.ToUpper()) || item.Description.ToUpper().Contains(search.ToUpper()))
+                    {
+                        ViewItems.Add(item);
+                    }
+                }
+                ViewedItems = ViewItems.OrderBy(x => x.Abbreviation).ToList();
+                OnPropertyChanged(nameof(ViewedItems));
+            }
+        }
 
         public void SetItemTrue(string Abbreviation)
         {
@@ -129,12 +154,10 @@ namespace Redesign
                 {
                     if (Items[i].Abbreviation.Equals(Abbreviation, StringComparison.Ordinal))
                     {
-                        Console.Write("Item found: " + Items[i].Abbreviation + "!     " + Items[i].IsSelected.ToString());
                         PhraseListItemViewModel newItem = Items[i];
                         newItem.IsSelected = true;
                         Items.Remove(Items[i]);
                         Items.Add(newItem);
-                        Console.WriteLine(" ->     " + newItem.IsSelected.ToString());
                         OnPropertyChanged(nameof(Items));
 
                         SelectedItem = newItem;
@@ -146,20 +169,7 @@ namespace Redesign
                         newItem.IsSelected = false;
                         Items.Remove(Items[i]);
                         Items.Add(newItem);
-                        Console.WriteLine(" ->     " + newItem.IsSelected.ToString());
                     }
-                }
-
-
-                Console.WriteLine();
-                Console.WriteLine();
-                foreach (var item in Items)
-                {
-                    Console.WriteLine("------- START -------");
-                    Console.WriteLine("Phrase: " + item.Abbreviation);
-                    Console.WriteLine("Description: " + item.Description);
-                    Console.WriteLine("Content: " + item.Content);
-                    Console.WriteLine("-------  END  -------");
                 }
             }
         }

@@ -50,6 +50,13 @@ namespace Redesign
             set { isSelected = value; OnPropertyChanged(nameof(isSelected)); }
         }
 
+        private static bool _listClicked = false;
+        public bool ListClicked
+        {
+            get { return _listClicked; }
+            set { _listClicked = value; OnPropertyChanged(nameof(_listClicked)); }
+        }
+
         #region Commands
         /// <summary>
         /// The command to select the clicked item
@@ -75,6 +82,10 @@ namespace Redesign
         #region Methods
         public void SelectItem()
         {
+            ListClicked = true;
+            OnPropertyChanged(nameof(ListClicked));
+            ListClicked = false;
+            OnPropertyChanged(nameof(ListClicked));
             PhraseListDataModel list = PhraseListDataModel.Instance;
             list.SetItemTrue(Abbreviation);
         }

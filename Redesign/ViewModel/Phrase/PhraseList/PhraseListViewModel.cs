@@ -18,5 +18,15 @@ namespace Redesign
             get { return _items; }
             set { _items = value; OnPropertyChanged(nameof(_items)); }
         }
+
+        /// <summary>
+        /// The viewable list items
+        /// </summary>
+        public List<PhraseListItemViewModel> _viewedItems;
+        public List<PhraseListItemViewModel> ViewedItems
+        {
+            get { return _viewedItems; }
+            set { _viewedItems = value; OnPropertyChanged(nameof(_viewedItems)); }
+        }
     }
 }

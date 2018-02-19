@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Redesign"
              mc:Ignorable="d" 
-             d:DesignHeight="50" d:DesignWidth="300">
+             d:DesignHeight="50" d:DesignWidth="300" Cursor="Hand">
 
     <UserControl.Resources>
         <Style x:Key="ContentStyle" TargetType="{x:Type ContentControl}">
@@ -16,40 +16,37 @@
                                 Background="{StaticResource BackgroundCreamBrush}"
                                 BorderThickness="0 0 0 1" 
                                 BorderBrush="#d4d4d4">
-                            <Grid x:Name="Container" 
-                                  Background="Transparent"
-                                  Height="50" >
-                                <Grid.InputBindings>
-                                    <MouseBinding Gesture="LeftClick" Command="{Binding SelectCommand}"/>
-                                </Grid.InputBindings>
-                                <Grid.ColumnDefinitions>
-                                    <!-- Main Content -->
-                                    <ColumnDefinition Width="*" />
-                                    <!-- Delete Button -->
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
+                            <Button Style="{StaticResource ListItemButton}">
+                                <Grid x:Name="Container" 
+                                      Background="Transparent"
+                                      Height="50"
+                                      Focusable="True">
+                                    <Grid.InputBindings>
+                                        <MouseBinding Gesture="LeftClick" Command="{Binding SelectCommand}"/>
+                                    </Grid.InputBindings>
+                                    <Grid.ColumnDefinitions>
+                                        <!-- Main Content -->
+                                        <ColumnDefinition Width="*" />
+                                        <!-- Delete Button -->
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
 
-                                <!-- Main Content -->
-                                <StackPanel Grid.Column="0"
+                                    <!-- Main Content -->
+                                    <StackPanel Grid.Column="0"
                                             Margin="12 0 0 0"
                                             VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding Abbreviation}" 
+                                        <TextBlock Text="{Binding Abbreviation}" 
                                                 FontFamily="arial"
                                                 FontWeight="Bold"
                                                 FontSize="14"
                                                 Margin="0 0 0 2"/>
-                                    <TextBlock Text="{Binding Description}" 
+                                        <TextBlock Text="{Binding Description}" 
                                                FontFamily="arial"
                                                FontSize="12"
                                                TextTrimming="CharacterEllipsis" />
-                                    
-                                </StackPanel>
-                                <!--<Button x:Name="DeleteButton"
-                                        Grid.Column="1" 
-                                        Background="#FFC91818"
-                                        BorderThickness="0"
-                                        Width="0"/>-->
-                                <Button Grid.Column="1" 
+
+                                    </StackPanel>
+                                    <Button Grid.Column="1" 
                                         x:Name="DeleteButton"
                                         Style="{StaticResource PhraseListButton}"
                                         Content="{StaticResource MaterialIconMoreVert}"
@@ -58,7 +55,8 @@
                                         Padding="5 0"
                                         Width="0"
                                         Height="Auto" ToolTip="More Actions" />
-                            </Grid>
+                                </Grid>
+                            </Button>
                         </Border>
 
                         <ControlTemplate.Triggers>
@@ -78,8 +76,10 @@
                             </EventTrigger>
                             <DataTrigger Binding="{Binding IsSelected}" Value="True">
                                 <Setter Property="Background" TargetName="background" Value="{StaticResource BackgroundDarkCreamBrush}" />
+                                <!--<Setter Property="Width" TargetName="DeleteButton" Value="20" />-->
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ListClicked}" Value="True">
                                 <Setter Property="FocusManager.FocusedElement" Value="{Binding RelativeSource={RelativeSource Self}}" />
-                                <Setter Property="Width" TargetName="DeleteButton" Value="20" />
                             </DataTrigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -89,7 +89,8 @@
     </UserControl.Resources>
 
     <ContentControl d:DataContext="{x:Static local:PhraseListItemDataModel.Instance}"
-                    Style="{StaticResource ContentStyle}" />
+                    Style="{StaticResource ContentStyle}" 
+                    Focusable="True"/>
 
 
 
