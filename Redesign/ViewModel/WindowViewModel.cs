@@ -157,6 +157,21 @@ namespace Redesign
         /// </summary>
         public ICommand SearchXCommand { get; set; }
 
+        /// <summary>
+        /// The command to clear the search text
+        /// </summary>
+        public ICommand AddCommand { get; set; }
+
+        /// <summary>
+        /// The command to clear the search text
+        /// </summary>
+        public ICommand DeleteCommand { get; set; }
+
+        /// <summary>
+        /// The command to clear the search text
+        /// </summary>
+        public ICommand ShareCommand { get; set; }
+
         #endregion
 
         /// <summary>
@@ -199,6 +214,10 @@ namespace Redesign
             CloseCommand = new RelayCommand(() => mWindow.Close());
 
             SearchXCommand = new RelayCommand(ClearSearchText);
+
+            AddCommand = new RelayCommand(AddPhrase);
+            DeleteCommand = new RelayCommand(DeletePhrase);
+            ShareCommand = new RelayCommand(SharePhrase);
 
             // Fix window resize issue
             mWindowResizer = new WindowResizer(mWindow);
@@ -243,7 +262,23 @@ namespace Redesign
         /// </summary>
         public void ClearSearchText()
         {
-            SearchBoxText = "";
+            SearchBoxText = string.Empty;
+            OnPropertyChanged(nameof(SearchBoxText));
+        }
+
+        public void AddPhrase()
+        {
+            PhraseListDataModel.Instance.AddPhrase();
+        }
+
+        public void DeletePhrase()
+        {
+            PhraseListDataModel.Instance.DeletePhrase();
+        }
+
+        public void SharePhrase()
+        {
+            PhraseListDataModel.Instance.SharePhrase();
         }
 
         #endregion

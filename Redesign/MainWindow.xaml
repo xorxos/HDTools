@@ -69,15 +69,18 @@
                 <StackPanel Grid.Row="1">
                     <Button Style="{StaticResource MenuIconButton}" 
                             Height="50"
+                            Command="{Binding AddCommand}" 
                             FontSize="26"
                             Content="{StaticResource MaterialIconAdd}" 
                             ToolTip="New Phrase" Cursor="Hand"/>
                     <Button Style="{StaticResource MenuIconButton}" 
+                            Command="{Binding DeleteCommand}"
                             Height="50"
                             FontSize="25"
                             Content="{StaticResource MaterialIconTrash}" 
                             ToolTip="Delete Selected Phrase" Cursor="Hand"/>
                     <Button Style="{StaticResource MenuIconButton}" 
+                            Command="{Binding ShareCommand}"
                             Height="50"
                             FontSize="26"
                             Content="{StaticResource MaterialIconShare}" 

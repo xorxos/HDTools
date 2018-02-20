@@ -112,7 +112,6 @@
       <DependentUpon>SideItems.xaml</DependentUpon>
     </Compile>
     <Compile Include="ValueConverters\IsNullOrEmptyConverter.cs" />
-    <Compile Include="ValueConverters\LeftMarginToRichTextWidthConverter.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
     <Compile Include="ViewModel\Phrase\DesignData\PhraseListDataModel.cs" />

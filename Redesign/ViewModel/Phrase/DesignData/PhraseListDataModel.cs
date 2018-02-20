@@ -52,7 +52,7 @@ namespace Redesign
                 new PhraseListItemViewModel
                 {
                     Abbreviation = "#IFSACC",
-                    Description = "How to request access to IFS and the link to form",
+                    Description = "How to request access to IFS and the link to form"
                 },
                 new PhraseListItemViewModel
                 {
@@ -115,7 +115,11 @@ namespace Redesign
                     Description = "Steps on how to use remote desktop"
                 }
             };
-
+            for (int i = Items.Count - 1; i >= 0; i--)
+            {
+                Items[i].ID = i;
+                OnPropertyChanged(nameof(Items));
+            }
             GenerateViewedItems(WindowViewModel.Instance.SearchBoxText);
         }
         #endregion
@@ -128,9 +132,12 @@ namespace Redesign
                 ViewedItems = Items.OrderBy(x =>x.Abbreviation).ToList();
                 OnPropertyChanged(nameof(ViewedItems));
 
-                //Set the initial selected item object. Run SetItemTrue twice to keep the top item at the top.
-                var selectitem = ViewedItems.First();
-                SetItemTrue(selectitem.Abbreviation);
+                //Set the initial selected item object.
+                if (Items.Count != 0)
+                {
+                    var selectitem = ViewedItems.First();
+                    SetItemTrue(selectitem.ID);
+                }
             }
             else
             {
@@ -146,13 +153,13 @@ namespace Redesign
             }
         }
 
-        public void SetItemTrue(string Abbreviation)
+        public void SetItemTrue(int ID)
         {
             if (Items.Count != 0)
             {
                 for (int i = Items.Count - 1; i >= 0; i--)
                 {
-                    if (Items[i].Abbreviation.Equals(Abbreviation, StringComparison.Ordinal))
+                    if (Items[i].ID == ID)
                     {
                         PhraseListItemViewModel newItem = Items[i];
                         newItem.IsSelected = true;
@@ -172,6 +179,55 @@ namespace Redesign
                     }
                 }
             }
+        }
+
+        public void AddPhrase()
+        {
+            for (int i = Items.Count - 1; i >= 0; i--)
+            {
+                Items[i].ID = i;
+                OnPropertyChanged(nameof(Items));
+            }
+            PhraseListItemViewModel newItem = new PhraseListItemViewModel
+            {
+                Abbreviation = "New Phrase",
+                Description = "No Description",
+                Content = "",
+                ID = Items.Count +1
+            };
+            Items.Add(newItem);
+            WindowViewModel.Instance.ClearSearchText();
+            GenerateViewedItems(string.Empty);
+            SetItemTrue(newItem.ID);
+            OnPropertyChanged(nameof(Items));
+            OnPropertyChanged(nameof(GenerateViewedItems));
+        }
+
+        public void DeletePhrase()
+        {
+            if (Items.Count != 0)
+            {
+                for (int i = Items.Count - 1; i >= 0; i--)
+                {
+                    if (Items[i].IsSelected)
+                    {
+                        Items.Remove(Items[i]);
+                        GenerateViewedItems(WindowViewModel.Instance.SearchBoxText);
+                        OnPropertyChanged(nameof(GenerateViewedItems));
+                        break;
+                    }
+                }
+            }
+            for (int i = Items.Count - 1; i >= 0; i--)
+            {
+                Items[i].ID = i;
+                OnPropertyChanged(nameof(Items));
+            }
+        }
+
+        public void SharePhrase()
+        {
+
         }
     }
 }

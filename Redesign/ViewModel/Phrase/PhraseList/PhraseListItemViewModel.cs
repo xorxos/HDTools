@@ -41,6 +41,16 @@ namespace Redesign
         }
 
         /// <summary>
+        /// The content for the richtextbox
+        /// </summary>
+        private int _ID;
+        public int ID
+        {
+            get { return _ID; }
+            set { _ID = value; OnPropertyChanged(nameof(_ID)); }
+        }
+
+        /// <summary>
         /// True if this item is currently selected
         /// </summary>
         private bool isSelected;
@@ -87,7 +97,7 @@ namespace Redesign
             ListClicked = false;
             OnPropertyChanged(nameof(ListClicked));
             PhraseListDataModel list = PhraseListDataModel.Instance;
-            list.SetItemTrue(Abbreviation);
+            list.SetItemTrue(ID);
         }
         #endregion
     }
