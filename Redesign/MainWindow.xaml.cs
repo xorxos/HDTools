@@ -30,6 +30,16 @@ namespace Redesign
 
         }
 
-       
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                ItemColumn.Width = new GridLength(500);
+            }
+            else
+            {
+                ItemColumn.Width = new GridLength(300);
+            }
+        }
     }
 }

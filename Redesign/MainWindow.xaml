@@ -17,6 +17,7 @@
         MinHeight="{Binding WindowMinimumHeight}"
         Style="{StaticResource MyWindow}"
         x:Name="AppWindow"
+        StateChanged="Window_StateChanged"
         Title="MainWindow" Height="600" Width="1070" >
 
     <WindowChrome.WindowChrome>
@@ -99,7 +100,7 @@
         <!-- Program Content -->
         <Grid Grid.Column="1" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300" />
+                <ColumnDefinition x:Name="ItemColumn" Width="300" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
