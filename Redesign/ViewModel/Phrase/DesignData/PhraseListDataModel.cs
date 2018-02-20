@@ -129,7 +129,7 @@ namespace Redesign
             List<PhraseListItemViewModel> ViewItems = new List<PhraseListItemViewModel>();
             if (search == null || search == "" || search == string.Empty)
             {
-                ViewedItems = Items.OrderBy(x =>x.Abbreviation).ToList();
+                ViewedItems = Items.OrderBy(x => x.Abbreviation != "New Phrase").ThenBy(x => x.Abbreviation).ToList();
                 OnPropertyChanged(nameof(ViewedItems));
 
                 //Set the initial selected item object.
@@ -148,7 +148,7 @@ namespace Redesign
                         ViewItems.Add(item);
                     }
                 }
-                ViewedItems = ViewItems.OrderBy(x => x.Abbreviation).ToList();
+                ViewedItems = ViewItems.OrderBy(x => x.Abbreviation != "New Phrase").ThenBy(x => x.Abbreviation).ToList();
                 OnPropertyChanged(nameof(ViewedItems));
             }
         }
@@ -197,10 +197,7 @@ namespace Redesign
             };
             Items.Add(newItem);
             WindowViewModel.Instance.ClearSearchText();
-            GenerateViewedItems(string.Empty);
             SetItemTrue(newItem.ID);
-            OnPropertyChanged(nameof(Items));
-            OnPropertyChanged(nameof(GenerateViewedItems));
         }
 
         public void DeletePhrase()
