@@ -26,7 +26,7 @@ namespace Redesign
         {
             InitializeComponent();
 
-            this.DataContext = new WindowViewModel(this);
+            this.DataContext = WindowViewModel.Instance;
 
         }
 

@@ -126,11 +126,11 @@ namespace Redesign
         /// </summary>
         public bool DimmableOverlayVisible { get; set; }
 
-        string _searchboxtext = string.Empty;
+        private static string _searchboxtext = string.Empty;
         public string SearchBoxText
         {
             get { return _searchboxtext; }
-            set { _searchboxtext = value; OnPropertyChanged(nameof(SearchBoxText)); PhraseListDataModel.Instance.GenerateViewedItems(SearchBoxText); }
+            set { _searchboxtext = value; OnPropertyChanged(nameof(_searchboxtext)); PhraseListDataModel.Instance.GenerateViewedItems(SearchBoxText); }
         }
         #endregion
 
@@ -262,8 +262,10 @@ namespace Redesign
         /// </summary>
         public void ClearSearchText()
         {
+            Console.WriteLine(SearchBoxText);
             SearchBoxText = string.Empty;
             OnPropertyChanged(nameof(SearchBoxText));
+            Console.WriteLine("New: " + SearchBoxText);
         }
 
         public void AddPhrase()

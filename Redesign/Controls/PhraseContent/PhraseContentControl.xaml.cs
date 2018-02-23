@@ -69,10 +69,22 @@ namespace Redesign.Controls.PhraseContent
 
         void ApplyPropertyValueToSelectedText(DependencyProperty formattingProperty, object value)
         {
-            if (value == null)
+            //if (value == null)
+            //    return;
+
+            //_richTextBox.Selection.ApplyPropertyValue(formattingProperty, value);
+            if ((_richTextBox == null) || (_richTextBox.Selection == null))
                 return;
 
-            _richTextBox.Selection.ApplyPropertyValue(formattingProperty, value);
+            SolidColorBrush solidColorBrush = value as SolidColorBrush;
+            if ((solidColorBrush != null) && solidColorBrush.Color.Equals(Colors.Transparent))
+            {
+                _richTextBox.Selection.ApplyPropertyValue(formattingProperty, null);
+            }
+            else
+            {
+                _richTextBox.Selection.ApplyPropertyValue(formattingProperty, value);
+            }
         }
 
         private void UpdateVisualState()
@@ -80,6 +92,7 @@ namespace Redesign.Controls.PhraseContent
             UpdateToggleButtonState();
             UpdateSelectionListType();
             UpdateSelectedFontFamily();
+            UpdateFontColor();
             UpdateSelectedFontSize();
         }
 
@@ -130,14 +143,99 @@ namespace Redesign.Controls.PhraseContent
 
         private void UpdateSelectedFontSize()
         {
-            object value = _richTextBox.Selection.GetPropertyValue(TextElement.FontSizeProperty);
-            _FontSize.SelectedValue = (value == DependencyProperty.UnsetValue) ? null : value;
+            //object value = _richTextBox.Selection.GetPropertyValue(TextElement.FontSizeProperty);
+            //_FontSize.SelectedValue = (value == DependencyProperty.UnsetValue) ? null : value;
+
+
+            object value = DependencyProperty.UnsetValue;
+            if ((_richTextBox != null) && (_richTextBox.Selection != null))
+            {
+                value = _richTextBox.Selection.GetPropertyValue(TextElement.FontSizeProperty);
+            }
+
+            if (value == DependencyProperty.UnsetValue)
+                return;
+
+            if (_FontSize != null)
+            {
+                _FontSize.SelectedValue = value;
+            }
+        }
+
+
+        //private void _FontColor_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
+        //{
+            
+        //    Console.WriteLine(e.ToString());
+        //    Color newColor = (Color)e.NewValue;
+        //    Brush brush = new SolidColorBrush(newColor);
+        //    ApplyPropertyValueToSelectedText(TextElement.ForegroundProperty, brush);
+        //    _richTextBox.Focus();
+            
+        //}
+
+        private void UpdateFontColor()
+        {
+            object value = DependencyProperty.UnsetValue;
+            if ((_richTextBox != null) && (_richTextBox.Selection != null))
+            {
+                value = _richTextBox.Selection.GetPropertyValue(TextElement.ForegroundProperty);
+            }
+
+            if (value == DependencyProperty.UnsetValue)
+                return;
+
+            Color? currentColor = ((value == null)
+                                    ? null
+                                    : (Color?)((SolidColorBrush)value).Color);
+            if (_FontColor != null)
+            {
+                _FontColor.SelectedColor = currentColor;
+            }
+        }
+
+        private void UpdateFontBackgroundColor()
+        {
+            object value = DependencyProperty.UnsetValue;
+            if ((_richTextBox != null) && (_richTextBox.Selection != null))
+            {
+                value = _richTextBox.Selection.GetPropertyValue(TextElement.BackgroundProperty);
+            }
+
+            if (value == DependencyProperty.UnsetValue)
+                return;
+
+            Color? currentColor = ((value == null)
+                                    ? null
+                                    : (Color?)((SolidColorBrush)value).Color);
+            //if (_FontBackgroundColor != null)
+            //{
+            //    _FontBackgroundColor.SelectedColor = currentColor;
+            //}
         }
 
         void UpdateItemCheckedState(ToggleButton button, DependencyProperty formattingProperty, object expectedValue)
         {
-            object currentValue = _richTextBox.Selection.GetPropertyValue(formattingProperty);
-            button.IsChecked = (currentValue == DependencyProperty.UnsetValue) ? false : currentValue != null && currentValue.Equals(expectedValue);
+            //object currentValue = _richTextBox.Selection.GetPropertyValue(formattingProperty);
+            //button.IsChecked = (currentValue == DependencyProperty.UnsetValue) ? false : currentValue != null && currentValue.Equals(expectedValue);
+            
+
+
+            object currentValue = DependencyProperty.UnsetValue;
+            if ((_richTextBox != null) && (_richTextBox.Selection != null))
+            {
+                currentValue = _richTextBox.Selection.GetPropertyValue(formattingProperty);
+            }
+
+            if (currentValue == DependencyProperty.UnsetValue)
+                return;
+
+            if (button != null)
+            {
+                button.IsChecked = (currentValue == null)
+                                    ? false
+                                    : currentValue != null && currentValue.Equals(expectedValue);
+            }
         }
 
         private void _btnBullets_Checked(object sender, RoutedEventArgs e)
@@ -176,6 +274,11 @@ namespace Redesign.Controls.PhraseContent
             _btnAlignRight.IsChecked = false;
             _btnAlignCenter.IsChecked = false;
             _btnAlignLeft.IsChecked = false;
+        }
+
+        private void DropDownButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Clicked");
         }
         
     }

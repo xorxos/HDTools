@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Redesign"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
-             xmlns:local1="clr-namespace:Redesign.Controls.PhraseContent"
+             xmlns:fluent="urn:fluent-ribbon"
              mc:Ignorable="d" 
              d:DesignHeight="650" d:DesignWidth="690">
     <UserControl.Resources>
@@ -15,6 +15,7 @@
                           Opacity=".7" 
                           Direction="0" 
                           Color="#BBBBBB" />
+        
     </UserControl.Resources>
     
     <Grid DataContext="{x:Static local:PhraseListDataModel.Instance}">
@@ -114,15 +115,28 @@
                           SelectionChanged="FontSize_SelectionChanged"
                           Height="22" 
                           BorderBrush="#FFD1D1D1" FontSize="14"/>
-                    <Button Focusable="False"
-                        Cursor="Hand"
-                        Margin="8 0 0 0"
-                        x:Name="_btnTextColor"
-                        FontSize="17"
-                        CommandTarget="{Binding ElementName=_richTextBox}"
-                        Style="{StaticResource FontIconButton}" 
-                        Content="{StaticResource MaterialIconTextColor}" ToolTip="Font Color"
-                              />
+
+                    <fluent:DropDownButton>
+                        <fluent:ColorGallery />
+                    </fluent:DropDownButton>
+
+                    <fluent:DropDownButton x:Name="buttonTextEffects"
+                                           HorizontalAlignment="Left"
+                                           Padding="10"
+                                           SizeDefinition="Small" >
+                        <fluent:DropDownButton.Icon>
+                            <Grid>
+                                <Image Source="pack://application:,,,/Images/FontColor.png"
+                                           Width="24"
+                                           Height="24" />
+                            </Grid>
+                        </fluent:DropDownButton.Icon>
+                        <fluent:ColorGallery Mode="StandardColors" 
+                                             x:Name="_FontColor"
+                                             IsNoColorButtonVisible="False"/>
+                    </fluent:DropDownButton>
+
+
                     <Border BorderThickness="1" 
                         BorderBrush="#8d8e94" 
                         Margin="5 8" />
@@ -249,29 +263,28 @@
                                          Mode=TwoWay, 
                                          UpdateSourceTrigger=PropertyChanged}" 
                           SpellCheck.IsEnabled="True">
-             <RichTextBox.Resources>
-                 <Style TargetType="{x:Type Paragraph}">
-                     <Setter Property="Margin" Value="0" />
-                 </Style>
-             </RichTextBox.Resources>
-             <RichTextBox.CommandBindings>
-                 <CommandBinding Command="EditingCommands.ToggleBold"/>
-                 <CommandBinding Command="EditingCommands.ToggleItalic"/>
-                 <CommandBinding Command="EditingCommands.ToggleUnderline"/>
-                 <CommandBinding Command="EditingCommands.AlignLeft"/>
-                 <CommandBinding Command="EditingCommands.AlignCenter"/>
-                 <CommandBinding Command="EditingCommands.AlignRight"/>
-                 <CommandBinding Command="EditingCommands.AlignJustify"/>
-                 <CommandBinding Command="EditingCommands.ToggleBullets"/>
-                 <CommandBinding Command="EditingCommands.ToggleNumbering"/>
-                 <CommandBinding Command="EditingCommands.IncreaseIndentation"/>
-                 <CommandBinding Command="EditingCommands.DecreaseIndentation"/>
-             </RichTextBox.CommandBindings>
-             <xctk:RichTextBox.TextFormatter>
-                 <xctk:XamlFormatter />
-             </xctk:RichTextBox.TextFormatter>
+            <RichTextBox.Resources>
+                <Style TargetType="{x:Type Paragraph}">
+                    <Setter Property="Margin" Value="0" />
+                </Style>
+            </RichTextBox.Resources>
+            <RichTextBox.CommandBindings>
+                <CommandBinding Command="EditingCommands.ToggleBold"/>
+                <CommandBinding Command="EditingCommands.ToggleItalic"/>
+                <CommandBinding Command="EditingCommands.ToggleUnderline"/>
+                <CommandBinding Command="EditingCommands.AlignLeft"/>
+                <CommandBinding Command="EditingCommands.AlignCenter"/>
+                <CommandBinding Command="EditingCommands.AlignRight"/>
+                <CommandBinding Command="EditingCommands.AlignJustify"/>
+                <CommandBinding Command="EditingCommands.ToggleBullets"/>
+                <CommandBinding Command="EditingCommands.ToggleNumbering"/>
+                <CommandBinding Command="EditingCommands.IncreaseIndentation"/>
+                <CommandBinding Command="EditingCommands.DecreaseIndentation"/>
+            </RichTextBox.CommandBindings>
+            <xctk:RichTextBox.TextFormatter>
+                <xctk:XamlFormatter />
+            </xctk:RichTextBox.TextFormatter>
             <FlowDocument/>
         </xctk:RichTextBox>
-        
     </Grid>
 </UserControl>
