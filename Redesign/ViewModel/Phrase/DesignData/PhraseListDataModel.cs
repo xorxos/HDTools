@@ -150,6 +150,13 @@ namespace Redesign
                 }
                 ViewedItems = ViewItems.OrderBy(x => x.Abbreviation != "New Phrase").ThenBy(x => x.Abbreviation).ToList();
                 OnPropertyChanged(nameof(ViewedItems));
+
+                //Set the initial selected item object.
+                if (Items.Count != 0)
+                {
+                    var selectitem = ViewedItems.First();
+                    SetItemTrue(selectitem.ID);
+                }
             }
         }
 

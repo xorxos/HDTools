@@ -40,6 +40,7 @@
     <system:String x:Key="MaterialIconIndent">&#xE23E;</system:String>
     <system:String x:Key="MaterialIconTextColor">&#xE23C;</system:String>
     <system:String x:Key="MaterialIconInsertPhoto">&#xE251;</system:String>
+    <system:String x:Key="MaterialIconHighlightText">&#xE3AE;</system:String>
 
     <system:String x:Key="MaterialIconMinimize">&#xF5B0;</system:String>
     <system:String x:Key="MaterialIconMaximize">&#xF5AF;</system:String>

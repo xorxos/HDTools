@@ -27,7 +27,6 @@ namespace Redesign
             InitializeComponent();
 
             this.DataContext = WindowViewModel.Instance;
-
         }
 
         private void Window_StateChanged(object sender, EventArgs e)

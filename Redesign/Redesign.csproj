@@ -127,6 +127,7 @@
     <Compile Include="ValueConverters\IsNullOrEmptyConverter.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
+    <Compile Include="ViewModel\Color\ColorViewModel.cs" />
     <Compile Include="ViewModel\Phrase\DesignData\PhraseListDataModel.cs" />
     <Compile Include="ViewModel\Phrase\DesignData\PhraseListItemDataModel.cs" />
     <Compile Include="ViewModel\Phrase\PhraseContent\PhraseContentViewModel.cs" />

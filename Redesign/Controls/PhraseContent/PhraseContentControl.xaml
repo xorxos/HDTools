@@ -15,9 +15,9 @@
                           Opacity=".7" 
                           Direction="0" 
                           Color="#BBBBBB" />
-        
+
     </UserControl.Resources>
-    
+
     <Grid DataContext="{x:Static local:PhraseListDataModel.Instance}">
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
@@ -102,7 +102,7 @@
                           Style="{StaticResource ComboBoxFlatStyle}"
                           Margin="2, 0, 0, 0"
                           Focusable="False"
-                          Width="195"
+                          Width="169"
                           SelectionChanged="FontFamily_SelectionChanged"
                           Height="22" 
                           BorderBrush="#FFD1D1D1" FontSize="14"/>
@@ -111,35 +111,121 @@
                           Style="{StaticResource ComboBoxFlatStyle}"
                           Focusable="False"
                           Width="56" 
-                          Margin="5, 0, 0, 0" 
+                          Margin="5, 0, 5, 0" 
                           SelectionChanged="FontSize_SelectionChanged"
                           Height="22" 
                           BorderBrush="#FFD1D1D1" FontSize="14"/>
 
-                    <fluent:DropDownButton>
-                        <fluent:ColorGallery />
-                    </fluent:DropDownButton>
-
                     <fluent:DropDownButton x:Name="buttonTextEffects"
-                                           HorizontalAlignment="Left"
-                                           Padding="10"
-                                           SizeDefinition="Small" >
+                                           Height="35"
+                                           SizeDefinition="Small"
+                                           Padding="0"
+                                           Margin="0"
+                                           Focusable="False">
+                        <fluent:DropDownButton.Resources>
+
+                            <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.DropDownButton.MouseOver.BorderBrush" Color="Transparent" />
+                            <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.Pressed.BorderBrush" Color="Transparent" />
+                            <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.Pressed.Background" Color="Transparent" />
+                            <Style TargetType="{x:Type fluent:DropDownButton}">
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Background" Value="Transparent" />
+                            </Style>
+                        </fluent:DropDownButton.Resources>
+                        <fluent:DropDownButton.DataContext>
+                            <local:ColorViewModel/>
+                        </fluent:DropDownButton.DataContext>
                         <fluent:DropDownButton.Icon>
-                            <Grid>
-                                <Image Source="pack://application:,,,/Images/FontColor.png"
-                                           Width="24"
-                                           Height="24" />
+                            <Grid Margin="0,0,1,-4"
+                                  Focusable="False">
+                                <TextBlock Text="A" FontWeight="Bold" FontSize="15"
+                                           Focusable="False"/>
+
+                                <Rectangle Margin="-1 11 0 0"
+                                           Height="4"
+                                           Width="13"
+                                           HorizontalAlignment="Left"
+                                           Focusable="False">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="{Binding Instance.StandardColor}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
                             </Grid>
                         </fluent:DropDownButton.Icon>
-                        <fluent:ColorGallery Mode="StandardColors" 
+                        <fluent:ColorGallery Mode="ThemeColors"
+                                             StandardColorGridRows="3"
+                                             Focusable="False"
+                                             ThemeColorGridRows="5"
+                                             IsAutomaticColorButtonVisible="False"
+                                             SelectedColor="{Binding Path=Instance.StandardColor, 
+                                                                     Mode=TwoWay, 
+                                                                     UpdateSourceTrigger=PropertyChanged}"
+                                             SelectedColorChanged="_FontColor_SelectedColorChanged"
                                              x:Name="_FontColor"
-                                             IsNoColorButtonVisible="False"/>
+                                             IsNoColorButtonVisible="False"
+                                             IsMoreColorsButtonVisible="False">
+                            <fluent:ColorGallery.DataContext>
+                                <local:ColorViewModel/>
+                            </fluent:ColorGallery.DataContext>
+                        </fluent:ColorGallery>
+                    </fluent:DropDownButton>
+
+                    <fluent:DropDownButton x:Name="buttonTextHighlight"
+                                           Height="35"
+                                           SizeDefinition="Small"
+                                           Padding="0"
+                                           Margin="0"
+                                           Focusable="False">
+                        <fluent:DropDownButton.Resources>
+
+                            <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.DropDownButton.MouseOver.BorderBrush" Color="Transparent" />
+                            <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.Pressed.BorderBrush" Color="Transparent" />
+                            <SolidColorBrush x:Key="Fluent.Ribbon.Brushes.Button.Pressed.Background" Color="Transparent" />
+                            <Style TargetType="{x:Type fluent:DropDownButton}">
+                                <Setter Property="Foreground" Value="White" />
+                                <Setter Property="Background" Value="Transparent" />
+                            </Style>
+                        </fluent:DropDownButton.Resources>
+                        <fluent:DropDownButton.DataContext>
+                            <local:ColorViewModel/>
+                        </fluent:DropDownButton.DataContext>
+                        <fluent:DropDownButton.Icon>
+                            <Grid Margin="0,0,1,-4"
+                                  Focusable="False">
+                                <TextBlock Text="{StaticResource MaterialIconHighlightText}" FontFamily="{StaticResource RealMaterialIcons}" FontSize="16"
+                                           Margin="-2 -1 0 0"
+                                           Focusable="False" Foreground="White"/>
+
+                                <Rectangle Margin="-1 11 0 0"
+                                           Height="4"
+                                           Width="13"
+                                           HorizontalAlignment="Left"
+                                           Focusable="False">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="{Binding Instance.HighlightColor}" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Grid>
+                        </fluent:DropDownButton.Icon>
+                        <fluent:ColorGallery Mode="HighlightColors"
+                                             Focusable="False"
+                                             SelectedColor="{Binding Path=Instance.HighlightColor, 
+                                                                     Mode=TwoWay, 
+                                                                     UpdateSourceTrigger=PropertyChanged}"
+                                             SelectedColorChanged="_FontColorHighlight_SelectedColorChanged"
+                                             IsMoreColorsButtonVisible="False"
+                                             IsAutomaticColorButtonVisible="False"
+                                             x:Name="_FontColorHighlight">
+                            <fluent:ColorGallery.DataContext>
+                                <local:ColorViewModel/>
+                            </fluent:ColorGallery.DataContext>
+                        </fluent:ColorGallery>
                     </fluent:DropDownButton>
 
 
                     <Border BorderThickness="1" 
                         BorderBrush="#8d8e94" 
-                        Margin="5 8" />
+                        Margin="0 8 5 8" />
 
                     <ToggleButton Focusable="False"
                               x:Name="_btnBold"
@@ -240,19 +326,21 @@
                         Cursor="Hand"
                         CommandTarget="{Binding ElementName=_richTextBox}"
                         Style="{StaticResource FontIconButton}" 
-                        Content="{StaticResource MaterialIconInsertPhoto}" ToolTip="Insert Image"/>
+                        Content="{StaticResource MaterialIconInsertPhoto}" ToolTip="Insert Image - Coming Soon!"/>
                 </StackPanel>
             </Grid>
-            
+
         </Grid>
+
         <xctk:RichTextBox Style="{StaticResource MyRichText}"
                           Grid.Row="5"
                           Effect="{StaticResource z-depth3}"
-                          x:Name="_richTextBox"
                           Margin="30 10"
-                          Padding="30 30"
                           MaxWidth="1000"
+                          x:Name="_richTextBox"
+                          Padding="30 30"
                           AcceptsTab="True"
+                          RenderOptions.BitmapScalingMode="NearestNeighbor"
                           ScrollViewer.CanContentScroll="True"
                           VerticalScrollBarVisibility="Auto"
                           Background="#FFF"
@@ -286,5 +374,6 @@
             </xctk:RichTextBox.TextFormatter>
             <FlowDocument/>
         </xctk:RichTextBox>
+
     </Grid>
 </UserControl>

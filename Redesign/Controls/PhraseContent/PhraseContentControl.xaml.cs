@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Redesign.Controls.PhraseContent
 {
@@ -24,11 +15,13 @@ namespace Redesign.Controls.PhraseContent
         public PhraseContentControl()
         {
             InitializeComponent();
-
+            _FontColor.ThemeColorsSource = ThemeColors;
             _FontFamily.ItemsSource = System.Windows.Media.Fonts.SystemFontFamilies;
             _FontSize.ItemsSource = FontSizes;
             _richTextBox.Focus();
         }
+
+       
 
         public double[] FontSizes
         {
@@ -44,11 +37,28 @@ namespace Redesign.Controls.PhraseContent
             }
         }
 
+        
+
+        public Color[] ThemeColors { get; } = { Colors.White, Colors.Black, Colors.Gray, Colors.DeepSkyBlue, Colors.CadetBlue, Colors.Orange, Colors.Tomato, Colors.Yellow, Colors.MediumPurple, Colors.Green };
+
+        public Color ThemeColor
+        {
+            get { return ((SolidColorBrush)Application.Current.Resources["Fluent.Ribbon.Brushes.AccentBaseColorBrush"])?.Color ?? Colors.Pink; }
+
+            set
+            {
+                Application.Current.Resources["Fluent.Ribbon.Brushes.AccentBaseColorBrush"] = new SolidColorBrush(value);
+            }
+        }
+
+
+
+
         private void _richTextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             UpdateVisualState();
         }
-
+        
         private void FontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 0)
@@ -57,7 +67,7 @@ namespace Redesign.Controls.PhraseContent
             FontFamily editValue = (FontFamily)e.AddedItems[0];
             ApplyPropertyValueToSelectedText(TextElement.FontFamilyProperty, editValue);
         }
-
+        
         private void FontSize_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 0)
@@ -66,7 +76,7 @@ namespace Redesign.Controls.PhraseContent
             ApplyPropertyValueToSelectedText(TextElement.FontSizeProperty, e.AddedItems[0]);
             
         }
-
+        
         void ApplyPropertyValueToSelectedText(DependencyProperty formattingProperty, object value)
         {
             //if (value == null)
@@ -86,16 +96,17 @@ namespace Redesign.Controls.PhraseContent
                 _richTextBox.Selection.ApplyPropertyValue(formattingProperty, value);
             }
         }
-
+        
         private void UpdateVisualState()
         {
+            UpdateFontColorHighlight();
             UpdateToggleButtonState();
             UpdateSelectionListType();
             UpdateSelectedFontFamily();
             UpdateFontColor();
             UpdateSelectedFontSize();
         }
-
+        
         private void UpdateToggleButtonState()
         {
             UpdateItemCheckedState(_btnBold, TextElement.FontWeightProperty, FontWeights.Bold);
@@ -107,7 +118,7 @@ namespace Redesign.Controls.PhraseContent
             UpdateItemCheckedState(_btnAlignRight, Paragraph.TextAlignmentProperty, TextAlignment.Right);
             UpdateItemCheckedState(_btnAlignJustify, Paragraph.TextAlignmentProperty, TextAlignment.Right);
         }
-
+        
         private void UpdateSelectionListType()
         {
             Paragraph startParagraph = _richTextBox.Selection.Start.Paragraph;
@@ -130,7 +141,7 @@ namespace Redesign.Controls.PhraseContent
                 _btnNumbers.IsChecked = false;
             }
         }
-
+        
         private void UpdateSelectedFontFamily()
         {
             object value = _richTextBox.Selection.GetPropertyValue(TextElement.FontFamilyProperty);
@@ -140,13 +151,9 @@ namespace Redesign.Controls.PhraseContent
                 _FontFamily.SelectedItem = currentFontFamily;
             }
         }
-
+        
         private void UpdateSelectedFontSize()
         {
-            //object value = _richTextBox.Selection.GetPropertyValue(TextElement.FontSizeProperty);
-            //_FontSize.SelectedValue = (value == DependencyProperty.UnsetValue) ? null : value;
-
-
             object value = DependencyProperty.UnsetValue;
             if ((_richTextBox != null) && (_richTextBox.Selection != null))
             {
@@ -161,19 +168,23 @@ namespace Redesign.Controls.PhraseContent
                 _FontSize.SelectedValue = value;
             }
         }
-
-
-        //private void _FontColor_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color?> e)
-        //{
-            
-        //    Console.WriteLine(e.ToString());
-        //    Color newColor = (Color)e.NewValue;
-        //    Brush brush = new SolidColorBrush(newColor);
-        //    ApplyPropertyValueToSelectedText(TextElement.ForegroundProperty, brush);
-        //    _richTextBox.Focus();
-            
-        //}
-
+        
+        private void _FontColor_SelectedColorChanged(object d, RoutedEventArgs e)
+        {
+            Color newColor = ColorViewModel.Instance.StandardColor;
+            Brush brush = new SolidColorBrush(newColor);
+            ApplyPropertyValueToSelectedText(TextElement.ForegroundProperty, brush);
+            _richTextBox.Focus();
+        }
+        
+        private void _FontColorHighlight_SelectedColorChanged(object d, RoutedEventArgs e)
+        {
+            Color newColor = ColorViewModel.Instance.HighlightColor;
+            Brush brush = new SolidColorBrush(newColor);
+            ApplyPropertyValueToSelectedText(TextElement.BackgroundProperty, brush);
+            _richTextBox.Focus();
+        }
+        
         private void UpdateFontColor()
         {
             object value = DependencyProperty.UnsetValue;
@@ -193,8 +204,8 @@ namespace Redesign.Controls.PhraseContent
                 _FontColor.SelectedColor = currentColor;
             }
         }
-
-        private void UpdateFontBackgroundColor()
+        
+        private void UpdateFontColorHighlight()
         {
             object value = DependencyProperty.UnsetValue;
             if ((_richTextBox != null) && (_richTextBox.Selection != null))
@@ -208,19 +219,22 @@ namespace Redesign.Controls.PhraseContent
             Color? currentColor = ((value == null)
                                     ? null
                                     : (Color?)((SolidColorBrush)value).Color);
-            //if (_FontBackgroundColor != null)
-            //{
-            //    _FontBackgroundColor.SelectedColor = currentColor;
-            //}
+            if (_FontColorHighlight != null)
+            {
+                if((currentColor==null) || (currentColor==Colors.Transparent))
+                {
+                    Color transparent = Colors.Transparent;
+                    _FontColorHighlight.SelectedColor = transparent;
+                }
+                else
+                {
+                    _FontColorHighlight.SelectedColor = currentColor;
+                }
+            }
         }
-
+        
         void UpdateItemCheckedState(ToggleButton button, DependencyProperty formattingProperty, object expectedValue)
         {
-            //object currentValue = _richTextBox.Selection.GetPropertyValue(formattingProperty);
-            //button.IsChecked = (currentValue == DependencyProperty.UnsetValue) ? false : currentValue != null && currentValue.Equals(expectedValue);
-            
-
-
             object currentValue = DependencyProperty.UnsetValue;
             if ((_richTextBox != null) && (_richTextBox.Selection != null))
             {
@@ -237,6 +251,7 @@ namespace Redesign.Controls.PhraseContent
                                     : currentValue != null && currentValue.Equals(expectedValue);
             }
         }
+        
 
         private void _btnBullets_Checked(object sender, RoutedEventArgs e)
         {
@@ -274,11 +289,6 @@ namespace Redesign.Controls.PhraseContent
             _btnAlignRight.IsChecked = false;
             _btnAlignCenter.IsChecked = false;
             _btnAlignLeft.IsChecked = false;
-        }
-
-        private void DropDownButton_Click(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Clicked");
         }
         
     }
