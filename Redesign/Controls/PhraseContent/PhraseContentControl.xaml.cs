@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace Redesign.Controls.PhraseContent
 {
@@ -290,6 +291,24 @@ namespace Redesign.Controls.PhraseContent
             _btnAlignCenter.IsChecked = false;
             _btnAlignLeft.IsChecked = false;
         }
-        
+
+        private void _btnInsert_Click(object sender, RoutedEventArgs e)
+        {
+
+            var fileDialog = new System.Windows.Forms.OpenFileDialog();
+            fileDialog.InitialDirectory = @"%USERPROFILE%\Documents\";
+            var result = fileDialog.ShowDialog();
+
+            switch (result)
+            {
+                case System.Windows.Forms.DialogResult.OK:
+                    var file = fileDialog.FileName;
+                    _richTextBox.CaretPosition.InsertTextInRun(file);
+                    break;
+                case System.Windows.Forms.DialogResult.Cancel:
+                default:
+                    break;
+            }
+        }
     }
 }

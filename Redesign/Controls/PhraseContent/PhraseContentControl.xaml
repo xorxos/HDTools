@@ -324,7 +324,7 @@
                     <Button Focusable="False"
                         x:Name="_btnInsert"
                         Cursor="Hand"
-                        CommandTarget="{Binding ElementName=_richTextBox}"
+                            Click="_btnInsert_Click"
                         Style="{StaticResource FontIconButton}" 
                         Content="{StaticResource MaterialIconInsertPhoto}" ToolTip="Insert Image - Coming Soon!"/>
                 </StackPanel>
@@ -370,9 +370,9 @@
                 <CommandBinding Command="EditingCommands.DecreaseIndentation"/>
             </RichTextBox.CommandBindings>
             <xctk:RichTextBox.TextFormatter>
-                <xctk:XamlFormatter />
+                <xctk:RtfFormatter />
             </xctk:RichTextBox.TextFormatter>
-            <FlowDocument/>
+            <FlowDocument x:Name="fld" />
         </xctk:RichTextBox>
 
     </Grid>

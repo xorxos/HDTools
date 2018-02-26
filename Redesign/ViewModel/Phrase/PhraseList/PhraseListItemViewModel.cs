@@ -37,7 +37,7 @@ namespace Redesign
         public string Content
         {
             get { return content; }
-            set { content = value; OnPropertyChanged(nameof(content)); }
+            set { content = value; OnPropertyChanged(nameof(content)); Console.WriteLine(value.ToString()); Console.WriteLine(); }
         }
 
         /// <summary>
