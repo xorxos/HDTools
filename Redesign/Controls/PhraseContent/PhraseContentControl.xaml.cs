@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -13,17 +16,17 @@ namespace Redesign.Controls.PhraseContent
     /// </summary>
     public partial class PhraseContentControl : UserControl
     {
+
         public PhraseContentControl()
         {
             InitializeComponent();
             _FontColor.ThemeColorsSource = ThemeColors;
             _FontFamily.ItemsSource = System.Windows.Media.Fonts.SystemFontFamilies;
             _FontSize.ItemsSource = FontSizes;
+            _richTextBox.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
             _richTextBox.Focus();
         }
-
-       
-
+        
         public double[] FontSizes
         {
             get
@@ -37,9 +40,7 @@ namespace Redesign.Controls.PhraseContent
                     };
             }
         }
-
         
-
         public Color[] ThemeColors { get; } = { Colors.White, Colors.Black, Colors.Gray, Colors.DeepSkyBlue, Colors.CadetBlue, Colors.Orange, Colors.Tomato, Colors.Yellow, Colors.MediumPurple, Colors.Green };
 
         public Color ThemeColor
@@ -51,10 +52,7 @@ namespace Redesign.Controls.PhraseContent
                 Application.Current.Resources["Fluent.Ribbon.Brushes.AccentBaseColorBrush"] = new SolidColorBrush(value);
             }
         }
-
-
-
-
+        
         private void _richTextBox_SelectionChanged(object sender, RoutedEventArgs e)
         {
             UpdateVisualState();
@@ -253,7 +251,6 @@ namespace Redesign.Controls.PhraseContent
             }
         }
         
-
         private void _btnBullets_Checked(object sender, RoutedEventArgs e)
         {
             _btnNumbers.IsChecked = false;
@@ -295,19 +292,45 @@ namespace Redesign.Controls.PhraseContent
         private void _btnInsert_Click(object sender, RoutedEventArgs e)
         {
 
-            var fileDialog = new System.Windows.Forms.OpenFileDialog();
-            fileDialog.InitialDirectory = @"%USERPROFILE%\Documents\";
-            var result = fileDialog.ShowDialog();
-
-            switch (result)
+            try
             {
-                case System.Windows.Forms.DialogResult.OK:
-                    var file = fileDialog.FileName;
-                    _richTextBox.CaretPosition.InsertTextInRun(file);
-                    break;
-                case System.Windows.Forms.DialogResult.Cancel:
-                default:
-                    break;
+                Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+                dlg.Filter = "Image files (*.jpg,*.jpeg,*.jpe,*.jfif,*.png)|*.jpg;*.jpeg;*.jpe;*.jfif;*.png";
+                Nullable<bool> result = dlg.ShowDialog();
+                if (result == true)
+                {
+                    string fileName = dlg.FileName;
+                    if (File.Exists(fileName))
+                    {
+                        BitmapImage bi = new BitmapImage(new Uri(fileName));
+                        Image image = new Image();
+                        image.Source = bi;
+                        image.Width = bi.Width;
+                        image.Height = bi.Height;
+                        image.Stretch = Stretch.Fill;
+                        image.Loaded += ImageOnLoaded;
+                        InlineUIContainer container = new InlineUIContainer(image);
+                        Paragraph paragraph = new Paragraph(container);
+                        _richTextBox.Document.Blocks.Add(paragraph);
+                    }
+                }
+            }
+            catch
+            {
+                throw;
+            }
+        }
+
+        private void ImageOnLoaded(object sender, RoutedEventArgs routedEventArgs)
+        {
+            var img = sender as Image;
+            if (img != null)
+            {
+                var al = AdornerLayer.GetAdornerLayer(img);
+                if (al != null)
+                {
+                    al.Add(new ResizingAdorner(img));
+                }
             }
         }
     }

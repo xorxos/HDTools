@@ -22,6 +22,7 @@ namespace Redesign
     /// </summary>
     public partial class MainWindow : Window
     {
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -40,5 +41,6 @@ namespace Redesign
                 ItemColumn.Width = new GridLength(300);
             }
         }
+        
     }
 }

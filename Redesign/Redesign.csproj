@@ -124,6 +124,7 @@
     <Compile Include="Controls\SideItems.xaml.cs">
       <DependentUpon>SideItems.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ResizingAdorner.cs" />
     <Compile Include="ValueConverters\IsNullOrEmptyConverter.cs" />
     <Compile Include="ViewModel\Base\BaseViewModel.cs" />
     <Compile Include="ViewModel\Base\RelayCommand.cs" />
